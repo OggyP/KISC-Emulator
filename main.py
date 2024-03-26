@@ -4,11 +4,18 @@ import emulator.cpu
 import compiler.instructions
 import compiler.compiler
 from compiler.instructions import I_SIZE, A_SIZE
+import struct
 
 
 
-def main(kln_path):
-    instructions_binary = compiler.compiler.compile(kln_path)
+def main(file_path: str):
+    if file_path.endswith('kln'):
+        instructions_binary = compiler.compiler.compile(file_path)
+
+        # Save compiled program
+        compiler.compiler.save_bool_list_to_binary(instructions_binary, 'program.kbin')
+    else:
+        instructions_binary = compiler.compiler.load_bool_list_from_binary(file_path)
 
     # Initialise Memory
     memory = emulator.memory.Memory(128 + len(instructions_binary))
