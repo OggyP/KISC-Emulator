@@ -5,17 +5,10 @@ import compiler.instructions
 import compiler.compiler
 from compiler.instructions import I_SIZE, A_SIZE
 
-if len(sys.argv) != 2:
-    print("Usage: python script.py <file_path>")
-    sys.exit(1)
-
-file_path = sys.argv[1]
 
 
-def main():
-
-    file_path = "program.kln"
-    instructions_binary = compiler.compiler.compile(file_path)
+def main(kln_path):
+    instructions_binary = compiler.compiler.compile(kln_path)
 
     # Initialise Memory
     memory = emulator.memory.Memory(128 + len(instructions_binary))
@@ -36,5 +29,10 @@ def main():
     RA = emulator.memory.mnemonic_to_adddress("RA")
     print("RA:", emulator.memory.bit_array_to_int(memory.get_value(RA[0], RA[1])))
 
+if len(sys.argv) != 2:
+    print("Usage: python main.py <file_path>")
+    sys.exit(1)
 
-main()
+file_path = sys.argv[1]
+
+main(file_path)
