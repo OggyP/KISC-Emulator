@@ -34,7 +34,7 @@ def line_to_binary(line: str):
 
         binary_array += emulator.memory.int_to_bit_array(value, A_SIZE)
 
-    print(instruction, args)
-    print(emulator.memory.display_binary_array(binary_array))
+    # print(instruction, args)
+    # print(emulator.memory.display_binary_array(binary_array))
 
     return binary_array

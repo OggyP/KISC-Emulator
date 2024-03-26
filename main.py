@@ -7,17 +7,21 @@ from compiler.instructions import I_SIZE, A_SIZE
 
 
 def main(file_path: str):
+    STARTING_ADDRESS = emulator.memory.hex_to_int("#080")
+
     if file_path.endswith("kln"):
-        instructions_binary = compiler.compiler.compile(file_path)
+        instructions_binary = compiler.compiler.compile(file_path, STARTING_ADDRESS)
 
         # Save compiled program
         compiler.compiler.save_bool_list_to_binary(instructions_binary, "program.kbin")
     else:
         instructions_binary = compiler.compiler.load_bool_list_from_binary(file_path)
 
+    print("Punch Cards:")
+    compiler.compiler.save_punch_card_to_file(instructions_binary, "program.kcard")
+
     # Initialise Memory
     memory = emulator.memory.Memory(128 + len(instructions_binary))
-    STARTING_ADDRESS = emulator.memory.hex_to_int("#080")
     memory.set_value(STARTING_ADDRESS, instructions_binary)
     memory.set_value(
         emulator.memory.mnemonic_to_adddress("PC")[0],
