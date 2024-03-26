@@ -44,6 +44,6 @@ def add(memory: emulator.memory.Memory, instruction_address: int):
         result.insert(0, result_bit == 1)
 
     FC = emulator.memory.mnemonic_to_adddress('FC')
-    memory.set_address(FC[0], [carry])
+    memory.set_value(FC[0], [carry])
 
     memory.set_value(address_to_add_to, result)
