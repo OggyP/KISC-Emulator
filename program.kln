@@ -1,0 +1,5 @@
+load RA 10
+load RB 15
+add RA RB
+bsr RA
+nop
