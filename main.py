@@ -7,7 +7,7 @@ from compiler.instructions import I_SIZE, A_SIZE
 
 
 def main(file_path: str):
-    STARTING_ADDRESS = emulator.memory.hex_to_int("#080")
+    STARTING_ADDRESS = 0
 
     if file_path.endswith("kln"):
         instructions_binary = compiler.compiler.compile(file_path, STARTING_ADDRESS)
@@ -21,22 +21,28 @@ def main(file_path: str):
     compiler.compiler.save_punch_card_to_file(instructions_binary, "program.kcard")
 
     # Initialise Memory
-    memory = emulator.memory.Memory(128 + len(instructions_binary))
-    memory.set_value(STARTING_ADDRESS, instructions_binary)
-    memory.set_value(
+    ROM = emulator.memory.Memory(len(instructions_binary))
+    ROM.set_value(STARTING_ADDRESS, instructions_binary)
+
+    RAM = emulator.memory.Memory(128)
+    RAM.set_value(
         emulator.memory.mnemonic_to_adddress("PC")[0],
         emulator.memory.int_to_bit_array(STARTING_ADDRESS, A_SIZE),
     )
 
+    stack = emulator.memory.Memory(128)
+
+    # RAM = emulator.memory.Memory(128)
+
     # Run Program
-    cpu = emulator.cpu.CPU(memory)
+    cpu = emulator.cpu.CPU([RAM, stack, ROM])
     while cpu.running:
         cpu.tick()
 
     print("Hit nop")
 
     RA = emulator.memory.mnemonic_to_adddress("RA")
-    print("RA:", emulator.memory.bit_array_to_int(memory.get_value(RA[0], RA[1])))
+    print("RA:", emulator.memory.bit_array_to_int(RAM.get_value(RA[0], RA[1])))
 
 
 if len(sys.argv) != 2:
