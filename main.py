@@ -4,16 +4,14 @@ import emulator.cpu
 import compiler.instructions
 import compiler.compiler
 from compiler.instructions import I_SIZE, A_SIZE
-import struct
-
 
 
 def main(file_path: str):
-    if file_path.endswith('kln'):
+    if file_path.endswith("kln"):
         instructions_binary = compiler.compiler.compile(file_path)
 
         # Save compiled program
-        compiler.compiler.save_bool_list_to_binary(instructions_binary, 'program.kbin')
+        compiler.compiler.save_bool_list_to_binary(instructions_binary, "program.kbin")
     else:
         instructions_binary = compiler.compiler.load_bool_list_from_binary(file_path)
 
@@ -35,6 +33,7 @@ def main(file_path: str):
 
     RA = emulator.memory.mnemonic_to_adddress("RA")
     print("RA:", emulator.memory.bit_array_to_int(memory.get_value(RA[0], RA[1])))
+
 
 if len(sys.argv) != 2:
     print("Usage: python main.py <file_path>")
