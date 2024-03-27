@@ -24,7 +24,10 @@ def line_to_binary(line: str, current_address: int):
     binary_array = []
     labels = []
 
-    binary_array += emulator.memory.int_to_bit_array(INSTRUCTION_SET[instruction][0], I_SIZE)
+    if instruction in INSTRUCTION_SET:
+        binary_array += emulator.memory.int_to_bit_array(INSTRUCTION_SET[instruction][0], I_SIZE)
+    else:
+        raise SyntaxError(str(instruction) + " is not a valid instruction!")
     # Increment by instruction size
     current_address += I_SIZE
 
