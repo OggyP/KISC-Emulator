@@ -1,5 +1,10 @@
-load RA 10
-load RB 15
-add RA RB
-bsr RA
-nop
+.average
+  add RA R1
+  bsr RA
+  ret
+
+.start
+  ser RA #001
+  ser R1 #923
+  fnc .average
+  ret

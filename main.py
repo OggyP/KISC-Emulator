@@ -4,6 +4,7 @@ import emulator.cpu
 import compiler.instructions
 import compiler.compiler
 from compiler.instructions import I_SIZE, A_SIZE
+from emulator.memory import MEMBANK
 
 
 def main(file_path: str):
@@ -25,24 +26,25 @@ def main(file_path: str):
     ROM.set_value(STARTING_ADDRESS, instructions_binary)
 
     RAM = emulator.memory.Memory(128)
-    RAM.set_value(
+    REG = emulator.memory.Memory(128)
+    REG.set_value(
         emulator.memory.mnemonic_to_adddress("PC")[0],
         emulator.memory.int_to_bit_array(STARTING_ADDRESS, A_SIZE),
     )
 
-    stack = emulator.memory.Memory(128)
+    STK = emulator.memory.Memory(128)
 
     # RAM = emulator.memory.Memory(128)
 
     # Run Program
-    cpu = emulator.cpu.CPU([RAM, stack, ROM])
+    cpu = emulator.cpu.CPU([REG, RAM, STK, ROM])
     while cpu.running:
         cpu.tick()
 
-    print("Hit nop")
+    print("Program Haulted")
 
     RA = emulator.memory.mnemonic_to_adddress("RA")
-    print("RA:", emulator.memory.bit_array_to_int(RAM.get_value(RA[0], RA[1])))
+    print("RA:", emulator.memory.bit_array_to_int(REG.get_value(RA[0], RA[1])))
 
 
 if len(sys.argv) != 2:

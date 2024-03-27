@@ -3,16 +3,33 @@ import compiler.instructions
 import emulator.memory
 
 def compile(file_path: str, start_address: int):
-
     # Open the file and read its contents
     with open(file_path, "r") as file:
         lines = [line.rstrip("\n").split(';')[0].strip() for line in file.readlines()]
 
     instructions_binary = []
+    label_addresses = {}
+    label_refs = []
+
+    lines.insert(0, 'jmp .start')
 
     for line in lines:
-        current_address = start_address + len(instructions_binary)
-        instructions_binary += compiler.instructions.line_to_binary(line)
+        if len(line):
+            current_address = start_address + len(instructions_binary)
+            if line.startswith(compiler.instructions.LABEL_SYMBOL):
+                label_addresses[line.lstrip(compiler.instructions.LABEL_SYMBOL)] = current_address
+            else:
+                compiled_info = compiler.instructions.line_to_binary(line, current_address)
+                instructions_binary += compiled_info["bin"]
+                label_refs += compiled_info["labels"]
+
+    for label_ref in label_refs:
+        label = label_ref["label"]
+        if not label in label_addresses:
+            raise KeyError(f"Missing label \"{label}\"")
+        label_address = label_addresses[label]
+        insert_address = label_ref["address"]
+        instructions_binary[insert_address : insert_address + compiler.instructions.A_SIZE] = emulator.memory.int_to_bit_array(label_address, compiler.instructions.A_SIZE)
 
     return instructions_binary
 

@@ -1,3 +1,5 @@
+from enum import Enum
+
 def hex_to_int(hex_value: str):
     try:
         hex_value = hex_value.lstrip("#")
@@ -69,6 +71,12 @@ def mnemonic_to_adddress(mnemonic):
         hex_to_int(RESERVED_ADDRESSES[mnemonic][0]),
         RESERVED_ADDRESSES[mnemonic][1],
     )
+
+class MEMBANK(Enum):
+    REG = 0
+    RAM = 1
+    STK = 2
+    ROM = 3
 
 
 class Memory:
