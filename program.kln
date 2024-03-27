@@ -11,5 +11,5 @@
   ser RA #001
   ser R1 #001
   cmp RA R1
-  jgt .cmp_test
+  jne .cmp_test
   ret
