@@ -9,7 +9,7 @@
 
 .start
   ser RA #001
-  ser R1 #001
+  ser R1 #001  ;test this is a test
   cmp RA R1
   jne .cmp_test
   ret
