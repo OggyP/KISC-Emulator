@@ -8,8 +8,8 @@
   ret
 
 .start
-  ser RA #923
+  ser RA #001
   ser R1 #001
   cmp RA R1
-  jge .cmp_test
+  jgt .cmp_test
   ret
