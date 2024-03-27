@@ -9,6 +9,7 @@ def run_instruction(memory_banks: list[emulator.memory.Memory], instruction: int
         12: bsr,
         13: add,
         19: comp,
+        20: jlt,
         26: jmp,
         27: fnc
     }
@@ -77,6 +78,13 @@ def comp(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     result = [False, lhs > rhs, lhs == rhs]
     CV = emulator.memory.mnemonic_to_adddress('CV')
     memory_banks[MEMBANK.REG.value].set_value(CV[0], result)
+
+def jlt(memory_banks: list[emulator.memory.Memory], instruction_address: int):
+    CV = emulator.memory.mnemonic_to_adddress('CV')
+    CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], 3)
+
+    if CV_bits == [False, False, False]:
+        jmp(memory_banks, instruction_address)
 
 def jmp(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     address_to_jump_to = get_arg_bits(memory_banks[MEMBANK.ROM.value], instruction_address, 0)
