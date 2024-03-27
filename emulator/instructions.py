@@ -68,8 +68,11 @@ def comp(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     address_lhs = get_arg_value(memory_banks[MEMBANK.ROM.value], instruction_address, 0)
     address_rhs = get_arg_value(memory_banks[MEMBANK.ROM.value], instruction_address, 1)
     
-    lhs = memory_banks[MEMBANK.REG.value].get_value(address_lhs, A_SIZE)
-    rhs = memory_banks[MEMBANK.REG.value].get_value(address_rhs, A_SIZE)
+    lhs_bits = memory_banks[MEMBANK.REG.value].get_value(address_lhs, A_SIZE)
+    rhs_bits = memory_banks[MEMBANK.REG.value].get_value(address_rhs, A_SIZE)
+
+    lhs = emulator.memory.bit_array_to_int(lhs_bits)
+    rhs = emulator.memory.bit_array_to_int(rhs_bits)
 
     result = [False, lhs > rhs, lhs == rhs]
     CV = emulator.memory.mnemonic_to_adddress('CV')
