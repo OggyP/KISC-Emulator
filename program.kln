@@ -8,12 +8,12 @@
   ret
 
 .loop_test         ;BEGIN LoopTest
-  ser RA #002      ;  let num1 = 1
-  ser R0 #007      ;  let num2 = 10
+  ser RA #007      ;  let num1 = 1
+  ser R0 #002      ;  let num2 = 10
   .while           ;  WHILE num1 < num2
     cmp RA R0
-    jge .endwhile
-    inc RA         ;    increment num1
+    jle .endwhile
+    dec RA         ;    increment num1
     jmp .while
   .endwhile        ;  ENDWHILE
   ret              ;END LoopTest

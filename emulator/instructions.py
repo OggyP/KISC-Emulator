@@ -9,6 +9,7 @@ def run_instruction(memory_banks: list[emulator.memory.Memory], instruction: int
         12: bsr,
         13: add,
         17: inc,
+        18: dec,
         19: comp,
         20: jlt,
         21: jle,
@@ -95,6 +96,30 @@ def inc(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     memory_banks[MEMBANK.REG.value].set_value(FC[0], [carry])
 
     memory_banks[MEMBANK.REG.value].set_value(address_to_add_to, result)
+
+def dec(memory_banks: list[emulator.memory.Memory], instruction_address: int):
+    address_to_subtract_from = get_arg_value(memory_banks[MEMBANK.ROM.value], instruction_address, 0)
+    arr1 = memory_banks[MEMBANK.REG.value].get_value(address_to_subtract_from, A_SIZE)
+    arr2 = [True for i in range(12)]
+    
+    result = []
+    carry = False
+
+    for bit1, bit2 in zip(reversed(arr1), reversed(arr2)):
+        # Perform binary addition considering the carry
+        sum_bits = bit1 + bit2 + carry
+
+        # Calculate the result bit and the carry for the next iteration
+        result_bit = sum_bits % 2
+        carry = sum_bits // 2
+
+        # Add the result bit to the beginning of the result list
+        result.insert(0, result_bit == 1)
+
+    FC = emulator.memory.mnemonic_to_adddress('FC')
+    memory_banks[MEMBANK.REG.value].set_value(FC[0], [carry])
+
+    memory_banks[MEMBANK.REG.value].set_value(address_to_subtract_from, result)
 
 def comp(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     address_lhs = get_arg_value(memory_banks[MEMBANK.ROM.value], instruction_address, 0)
