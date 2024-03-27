@@ -11,6 +11,7 @@ def run_instruction(memory_banks: list[emulator.memory.Memory], instruction: int
         19: comp,
         20: jlt,
         21: jle,
+        22: jeq,
         26: jmp,
         27: fnc
     }
@@ -92,6 +93,13 @@ def jle(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], 3)
 
     if CV_bits == [False, False, False] or CV_bits == [False, False, True]:
+        jmp(memory_banks, instruction_address)
+
+def jeq(memory_banks: list[emulator.memory.Memory], instruction_address: int):
+    CV = emulator.memory.mnemonic_to_adddress('CV')
+    CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], 3)
+
+    if CV_bits == [False, False, True]:
         jmp(memory_banks, instruction_address)
 
 def jmp(memory_banks: list[emulator.memory.Memory], instruction_address: int):

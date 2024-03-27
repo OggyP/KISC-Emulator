@@ -9,7 +9,7 @@
 
 .start
   ser RA #923
-  ser R1 #001
+  ser R1 #923
   cmp RA R1
-  jle .cmp_test
+  jeq .cmp_test
   ret
