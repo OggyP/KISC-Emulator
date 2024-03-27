@@ -12,7 +12,8 @@ def run_instruction(memory_banks: list[emulator.memory.Memory], instruction: int
         27: fnc
     }
 
-    FUNCTIONS[instruction](memory_banks, instruction_address)
+    if instruction in FUNCTIONS:
+        FUNCTIONS[instruction](memory_banks, instruction_address)
 
 
 def get_arg_bits(memory: emulator.memory.Memory, instruction_address: int, arg_num: int):
