@@ -1,7 +1,7 @@
 import emulator.memory
 
 from emulator.instructions.mem_mgnt import ser
-from emulator.instructions.bitwise import and_op, bsl, bsr
+from emulator.instructions.bitwise import and_op, bsl, bsr, orr
 from emulator.instructions.arithmetic import add, inc, dec
 from emulator.instructions.comparison_jumps import comp, jlt, jle, jeq, jge, jgt, jne, jmp, fnc
 
@@ -11,6 +11,7 @@ def run_instruction(memory_banks: list[emulator.memory.Memory], instruction: int
         0: nop,
         6: ser,
         8: and_op,
+        9: orr,
         11: bsl,
         12: bsr,
         13: add,
