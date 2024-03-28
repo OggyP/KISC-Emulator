@@ -12,9 +12,9 @@ logger = logging.getLogger(__name__)
 
 def main(file_path: str):
     if __debug__:
-        logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
+        logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     else:
-        logging.basicConfig(stream=sys.stderr, level=logging.INFO)
+        logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
     STARTING_ADDRESS = 0
 
