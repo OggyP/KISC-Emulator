@@ -20,8 +20,9 @@
 
 
 .start
-  ser RA #001
-  ser R0 #001
-  fnc .loop_test
+  ser RA 4
+  ser R0 8
+  ; fnc .loop_test
+  mpy RA R0
   otr RA
   ret

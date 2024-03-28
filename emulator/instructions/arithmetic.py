@@ -34,6 +34,33 @@ def add(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     memory_banks[MEMBANK.REG.value].set_value(address_to_add_to, result)
 
 
+def mpy(memory_banks: list[emulator.memory.Memory], instruction_address: int):
+    address_to_mpy_to = get_arg_value(
+        memory_banks[MEMBANK.ROM.value], instruction_address, 0)
+    address_to_mpy_from = get_arg_value(
+        memory_banks[MEMBANK.ROM.value], instruction_address, 1)
+
+    arr1 = memory_banks[MEMBANK.REG.value].get_value(address_to_mpy_to, A_SIZE)
+    arr2 = memory_banks[MEMBANK.REG.value].get_value(
+        address_to_mpy_from, A_SIZE)
+    
+    num1 = emulator.memory.bit_array_to_int(arr1)
+    num2 = emulator.memory.bit_array_to_int(arr2)
+    int_result = num1*num2
+
+    carry = False
+    if int_result >= MAX_INT:
+        carry = True
+        int_result = int_result % MAX_INT
+
+    result = emulator.memory.int_to_bit_array(int_result, 12)
+    
+    FC = emulator.memory.mnemonic_to_adddress("FC")
+    memory_banks[MEMBANK.REG.value].set_value(FC[0], [carry])
+
+    memory_banks[MEMBANK.REG.value].set_value(address_to_mpy_to, result)
+
+
 def inc(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     address_to_add_to = get_arg_value(
         memory_banks[MEMBANK.ROM.value], instruction_address, 0)

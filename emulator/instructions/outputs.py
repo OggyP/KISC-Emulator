@@ -12,7 +12,8 @@ def otr(memory_banks: list[emulator.memory.Memory], instruction_address: int):
 
 
 def otm(memory_banks: list[emulator.memory.Memory], instruction_address: int):
-    print_address = get_arg_value(
+    register_address = get_arg_value(
         memory_banks[MEMBANK.ROM.value], instruction_address, 0)
+    print_address = get_arg_value(register_address, A_SIZE)
     value = memory_banks[MEMBANK.RAM.value].get_value(print_address, A_SIZE)
     print(bit_array_to_int(value))
