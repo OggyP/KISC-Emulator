@@ -1,8 +1,11 @@
+import logging
 import emulator.memory
 import emulator.instructions.run
 import compiler.instructions
-from compiler.instructions import I_SIZE, A_SIZE
+from compiler.instructions import I_SIZE, A_SIZE, INSTRUCTION_NUM_TO_NAME
 from emulator.memory import MEMBANK
+
+logger = logging.getLogger(__name__)
 
 
 class CPU:
@@ -23,7 +26,7 @@ class CPU:
         instruction = emulator.memory.bit_array_to_int(instruction_bits)
 
         if instruction == 1:  # hits return
-            print("DEBUG:", "Hit ret")
+            logger.debug("Hit ret")
             stack_size = emulator.memory.bit_array_to_int(
                 self.memory_banks[MEMBANK.STK.value].get_value(0, A_SIZE))
             if stack_size == 0:
@@ -41,7 +44,7 @@ class CPU:
         self.memory_banks[MEMBANK.REG.value].add_value(
             PC[0], instruction_size, PC[1])
 
-        print("DEBUG:", "executing", instruction)
+        logger.debug(f"executing {instruction} ({INSTRUCTION_NUM_TO_NAME[instruction]})")
 
         emulator.instructions.run.run_instruction(
             self.memory_banks, instruction, instruction_address)

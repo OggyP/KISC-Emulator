@@ -1,3 +1,4 @@
+import logging
 import sys
 import emulator.memory
 import emulator.cpu
@@ -6,8 +7,12 @@ import compiler.compiler
 from compiler.instructions import I_SIZE, A_SIZE
 from emulator.memory import MEMBANK
 
+logger = logging.getLogger(__name__)
+
 
 def main(file_path: str):
+    logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
+
     STARTING_ADDRESS = 0
 
     if file_path.endswith("kln"):
@@ -40,7 +45,7 @@ def main(file_path: str):
     while cpu.running:
         cpu.tick()
 
-    print("Program Haulted")
+    logger.info("Program Haulted")
 
 
 if len(sys.argv) != 2:

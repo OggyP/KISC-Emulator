@@ -1,3 +1,4 @@
+import logging
 import emulator.memory
 
 from emulator.instructions.mem_mgnt import ser
@@ -6,6 +7,7 @@ from emulator.instructions.arithmetic import add, inc, dec
 from emulator.instructions.branches import comp, jlt, jle, jeq, jge, jgt, jne, jmp, fnc
 from emulator.instructions.outputs import otm, otr
 
+logger = logging.getLogger(__name__)
 
 def run_instruction(memory_banks: list[emulator.memory.Memory], instruction: int, instruction_address: int):
     FUNCTIONS = {
@@ -34,6 +36,8 @@ def run_instruction(memory_banks: list[emulator.memory.Memory], instruction: int
 
     if instruction in FUNCTIONS:
         FUNCTIONS[instruction](memory_banks, instruction_address)
+    else:
+        logger.warning(f"Unknown instruction {instruction}")
 
 
 def nop(memory_banks: list[emulator.memory.Memory], instruction_address: int):

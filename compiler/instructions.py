@@ -1,5 +1,8 @@
 import emulator.memory
 import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 INSTRUCTION_SET_FILE = "compiler/instruction_set.json"
 
@@ -7,10 +10,13 @@ with open(INSTRUCTION_SET_FILE, 'r') as file:
     data = json.load(file)
 
 INSTRUCTION_SET = {}
+INSTRUCTION_NUM_TO_NAME = {}
 INSTRUCTION_SIZE = {}
 for key, value in data.items():
-    INSTRUCTION_SET[key] = [emulator.memory.hex_to_int(value[0]), value[1]]
-    INSTRUCTION_SIZE[emulator.memory.hex_to_int(value[0])] = value[1]
+    instruction_num = emulator.memory.hex_to_int(value[0])
+    INSTRUCTION_SET[key] = [instruction_num, value[1]]
+    INSTRUCTION_SIZE[instruction_num] = value[1]
+    INSTRUCTION_NUM_TO_NAME[instruction_num] = key
 
 I_SIZE = 6 # instruction size
 A_SIZE = 12 # address / number size
@@ -54,8 +60,8 @@ def line_to_binary(line: str, current_address: int):
 
         binary_array += emulator.memory.int_to_bit_array(value, A_SIZE)
 
-    # print(instruction, args)
-    # print(emulator.memory.display_binary_array(binary_array))
+    logger.debug(f"{instruction} | {args}")
+    # logger.debug(emulator.memory.display_binary_array(binary_array))
 
     return {
         "bin": binary_array,

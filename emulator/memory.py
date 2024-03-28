@@ -1,4 +1,7 @@
 from enum import Enum
+import logging
+
+logger = logging.getLogger(__name__)
 
 def hex_to_int(hex_value: str):
     try:
@@ -6,7 +9,7 @@ def hex_to_int(hex_value: str):
         integer_value = int(hex_value, 16)
         return integer_value
     except ValueError:
-        print("Invalid hexadecimal value.")
+        logger.warn("Invalid hexadecimal value.")
         return 0
 
 
@@ -15,7 +18,7 @@ def int_to_hex(integer_value: int):
         hex_string = hex(integer_value)
         return hex_string
     except ValueError:
-        print("Invalid integer value.")
+        logger.warn("Invalid integer value.")
         return 0
 
 
@@ -65,12 +68,14 @@ def mnemonic_to_adddress(mnemonic) -> tuple[int, int]:
     }
 
     if not mnemonic in RESERVED_ADDRESSES:
+        logger.error(f"Reserved Address {mnemonic} does not exist")
         raise MemoryError(f"Reserved Address {mnemonic} does not exist")
 
     return (
         hex_to_int(RESERVED_ADDRESSES[mnemonic][0]),
         RESERVED_ADDRESSES[mnemonic][1],
     )
+
 
 class MEMBANK(Enum):
     REG = 0
@@ -82,13 +87,13 @@ class MEMBANK(Enum):
 class Memory:
     def __init__(self, max_address: int):
         self.memory = [False] * max_address
-        print(f"Initialised memory up to {int_to_hex(max_address)}")
+        logger.debug(f"Initialised memory up to {int_to_hex(max_address)}")
 
     def get_value(self, address: int, length: int):
-        return self.memory[address : address + length]
+        return self.memory[address: address + length]
 
     def set_value(self, address: int, bits: list[bool]):
-        self.memory[address : address + len(bits)] = bits
+        self.memory[address: address + len(bits)] = bits
 
     def copy_bits(self, from_address, to_address, length):
         self.set_value(to_address, self.get_value(from_address, length))
