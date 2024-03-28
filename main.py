@@ -11,19 +11,24 @@ logger = logging.getLogger(__name__)
 
 
 def main(file_path: str):
+    # Change this to change the logging level
     logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 
     STARTING_ADDRESS = 0
 
     if file_path.endswith("kln"):
-        instructions_binary = compiler.compiler.compile(file_path, STARTING_ADDRESS)
+        instructions_binary = compiler.compiler.compile(
+            file_path, STARTING_ADDRESS)
 
         # Save compiled program
-        compiler.compiler.save_bool_list_to_binary(instructions_binary, "program.kbin")
+        compiler.compiler.save_bool_list_to_binary(
+            instructions_binary, "program.kbin")
     else:
-        instructions_binary = compiler.compiler.load_bool_list_from_binary(file_path)
+        instructions_binary = compiler.compiler.load_bool_list_from_binary(
+            file_path)
 
-    compiler.compiler.save_punch_card_to_file(instructions_binary, "program.kcard")
+    compiler.compiler.save_punch_card_to_file(
+        instructions_binary, "program.kcard")
 
     # Initialise Memory
 
