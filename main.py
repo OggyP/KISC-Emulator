@@ -11,8 +11,10 @@ logger = logging.getLogger(__name__)
 
 
 def main(file_path: str):
-    # Change this to change the logging level
-    logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
+    if __debug__:
+        logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
+    else:
+        logging.basicConfig(stream=sys.stderr, level=logging.INFO)
 
     STARTING_ADDRESS = 0
 
