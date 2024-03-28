@@ -18,7 +18,6 @@ def main(file_path: str):
     else:
         instructions_binary = compiler.compiler.load_bool_list_from_binary(file_path)
 
-    print("Punch Cards:")
     compiler.compiler.save_punch_card_to_file(instructions_binary, "program.kcard")
 
     # Initialise Memory
@@ -42,9 +41,6 @@ def main(file_path: str):
         cpu.tick()
 
     print("Program Haulted")
-
-    RA = emulator.memory.mnemonic_to_adddress("RA")
-    print("RA:", emulator.memory.bit_array_to_int(REG.get_value(RA[0], RA[1])))
 
 
 if len(sys.argv) != 2:

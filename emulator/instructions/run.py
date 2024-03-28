@@ -4,6 +4,7 @@ from emulator.instructions.mem_mgnt import ser
 from emulator.instructions.bitwise import and_op, bsl, bsr, orr, xor
 from emulator.instructions.arithmetic import add, inc, dec
 from emulator.instructions.branches import comp, jlt, jle, jeq, jge, jgt, jne, jmp, fnc
+from emulator.instructions.outputs import otm, otr
 
 
 def run_instruction(memory_banks: list[emulator.memory.Memory], instruction: int, instruction_address: int):
@@ -27,6 +28,8 @@ def run_instruction(memory_banks: list[emulator.memory.Memory], instruction: int
         25: jne,
         26: jmp,
         27: fnc,
+        28: otr,
+        29: otm
     }
 
     if instruction in FUNCTIONS:

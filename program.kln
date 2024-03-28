@@ -23,4 +23,5 @@
   ser RA #001
   ser R0 #001  ;test this is a test
   fnc .loop_test
+  otr RA
   ret
