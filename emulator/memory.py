@@ -7,7 +7,7 @@ def hex_to_int(hex_value: str):
         return integer_value
     except ValueError:
         print("Invalid hexadecimal value.")
-        return None
+        return 0
 
 
 def int_to_hex(integer_value: int):
@@ -16,7 +16,7 @@ def int_to_hex(integer_value: int):
         return hex_string
     except ValueError:
         print("Invalid integer value.")
-        return None
+        return 0
 
 
 def int_to_bit_array(num, bits):
@@ -48,7 +48,7 @@ def display_binary_array(binary_array):
     return binary_str
 
 
-def mnemonic_to_adddress(mnemonic):
+def mnemonic_to_adddress(mnemonic) -> tuple[int, int]:
     RESERVED_ADDRESSES = {
         "PC": ("#000", 12),
         "RI": ("#00c", 12),

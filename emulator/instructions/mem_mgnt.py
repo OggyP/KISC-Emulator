@@ -1,4 +1,4 @@
-from emulator.instructions.run import get_arg_value
+from emulator.instructions.general_functions import get_arg_value
 import emulator.memory
 from compiler.instructions import I_SIZE, A_SIZE
 from emulator.memory import MEMBANK

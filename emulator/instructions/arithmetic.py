@@ -1,4 +1,4 @@
-from emulator.instructions.run import get_arg_value
+from emulator.instructions.general_functions import get_arg_value
 import emulator.memory
 from compiler.instructions import I_SIZE, A_SIZE
 from emulator.memory import MEMBANK
@@ -23,7 +23,7 @@ def add(memory_banks: list[emulator.memory.Memory], instruction_address: int):
 
         # Calculate the result bit and the carry for the next iteration
         result_bit = sum_bits % 2
-        carry = sum_bits // 2
+        carry = (sum_bits // 2) == 1
 
         # Add the result bit to the beginning of the result list
         result.insert(0, result_bit == 1)
@@ -50,7 +50,7 @@ def inc(memory_banks: list[emulator.memory.Memory], instruction_address: int):
 
         # Calculate the result bit and the carry for the next iteration
         result_bit = sum_bits % 2
-        carry = sum_bits // 2
+        carry = (sum_bits // 2) == 1
 
         # Add the result bit to the beginning of the result list
         result.insert(0, result_bit == 1)
@@ -77,7 +77,7 @@ def dec(memory_banks: list[emulator.memory.Memory], instruction_address: int):
 
         # Calculate the result bit and the carry for the next iteration
         result_bit = sum_bits % 2
-        carry = sum_bits // 2
+        carry = (sum_bits // 2) == 1
 
         # Add the result bit to the beginning of the result list
         result.insert(0, result_bit == 1)
