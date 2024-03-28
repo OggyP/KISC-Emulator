@@ -1,5 +1,5 @@
 import emulator.memory
-import emulator.instructions
+import emulator.instructions.run
 import compiler.instructions
 from compiler.instructions import I_SIZE, A_SIZE
 from emulator.memory import MEMBANK
@@ -35,5 +35,5 @@ class CPU:
 
         print("EXECUTING: ", instruction)
 
-        emulator.instructions.run_instruction(self.memory_banks, instruction, instruction_address)
+        emulator.instructions.run.run_instruction(self.memory_banks, instruction, instruction_address)
         
