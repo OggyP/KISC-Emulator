@@ -42,6 +42,25 @@ def orr(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     memory_banks[MEMBANK.REG.value].set_value(register_address_1, result)
 
 
+def xor(memory_banks: list[emulator.memory.Memory], instruction_address: int):
+    register_address_1 = get_arg_value(
+        memory_banks[MEMBANK.ROM.value], instruction_address, 0)
+    register_address_2 = get_arg_value(
+        memory_banks[MEMBANK.ROM.value], instruction_address, 1)
+
+    arr1 = memory_banks[MEMBANK.REG.value].get_value(
+        register_address_1, A_SIZE)
+    arr2 = memory_banks[MEMBANK.REG.value].get_value(
+        register_address_2, A_SIZE)
+
+    result = []
+
+    for bit1, bit2 in zip(arr1, arr2):
+        result.append(bit1 ^ bit2)
+
+    memory_banks[MEMBANK.REG.value].set_value(register_address_1, result)
+
+
 def bsr(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     address_to_shift = get_arg_value(
         memory_banks[MEMBANK.ROM.value], instruction_address, 0)
