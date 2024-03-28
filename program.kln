@@ -13,7 +13,7 @@
   .while           ;  WHILE num1 < num2
     cmp RA R0
     jle .endwhile
-    dec RA         ;    increment num1
+    dec RA         ;    decrement num1
     jmp .while
   .endwhile        ;  ENDWHILE
   ret              ;END LoopTest
