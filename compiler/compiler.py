@@ -72,9 +72,16 @@ def load_bool_list_from_binary(filename):
 
 def save_punch_card_to_file(bits_list, filename):
     with open(filename, 'w') as f:
+        current_card = 1
+        current_line = 0
+        f.write('Card 1:\n')
+        
         for i in range(0, len(bits_list), 6):
             bits_line = ''.join(
                 '1' if bit else '0' for bit in bits_list[i:i+6])
-            f.write(bits_line + '\n')
+            f.write(f'  {current_line}  |  {bits_line}\n')
+            current_line += 1
+
             if (i + 6) % 23 == 0:  # Insert newline every 23 lines
-                f.write('\n')
+                current_card += 1
+                f.write('\nCard ' + str(current_card) + ':\n')
