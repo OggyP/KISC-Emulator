@@ -1,6 +1,6 @@
 from emulator.instructions.general_functions import get_arg_bits, get_arg_value
 import emulator.memory
-from compiler.instructions import I_SIZE, A_SIZE
+from compiler.instructions import I_SIZE, A_SIZE, MAX_INT
 from emulator.memory import MEMBANK
 
 

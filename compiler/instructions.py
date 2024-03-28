@@ -20,6 +20,7 @@ for key, value in data.items():
 
 I_SIZE = 6 # instruction size
 A_SIZE = 12 # address / number size
+MAX_INT = 2**A_SIZE - 1
 
 LABEL_SYMBOL = '.'
 

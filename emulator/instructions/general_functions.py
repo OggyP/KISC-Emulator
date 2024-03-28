@@ -1,5 +1,5 @@
 import emulator.memory
-from compiler.instructions import I_SIZE, A_SIZE
+from compiler.instructions import I_SIZE, A_SIZE, MAX_INT
 from emulator.memory import MEMBANK
 
 
