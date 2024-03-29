@@ -1,7 +1,6 @@
 stages:          # List of stages for jobs, and their order of execution
   - compile-execute
   - execute-binary
-  - deploy
 
 compile-execute-job:       # This job runs in the build stage, which runs first.
   stage: compile-execute
