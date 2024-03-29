@@ -20,6 +20,22 @@ def ldr(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     )
 
 
+def ldm(memory_banks: list[emulator.memory.Memory], instruction_address: int):
+    register_address = get_arg_value(
+        memory_banks[MEMBANK.ROM.value], instruction_address, 0)
+    address_to = bit_array_to_int(
+        memory_banks[MEMBANK.REG.value].get_value(register_address, A_SIZE)
+        )
+    
+    address_from = get_arg_value(
+        memory_banks[MEMBANK.ROM.value], instruction_address, 1)
+    
+    memory_banks[MEMBANK.RAM.value].set_value(
+        address_to,
+        memory_banks[MEMBANK.REG.value].get_value(address_from, A_SIZE),
+    )
+
+
 def mvr(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     address_to = get_arg_value(
         memory_banks[MEMBANK.ROM.value], instruction_address, 0)

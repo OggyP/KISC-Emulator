@@ -1,7 +1,7 @@
 import logging
 import emulator.memory
 
-from emulator.instructions.mem_mgnt import ldr, mvr, mvm, ser, sem
+from emulator.instructions.mem_mgnt import ldr, ldm, mvr, mvm, ser, sem
 from emulator.instructions.bitwise import and_op, bsl, bsr, orr, xor
 from emulator.instructions.arithmetic import add, mpy, div, inc, dec
 from emulator.instructions.branches import comp, jlt, jle, jeq, jge, jgt, jne, jmp, fnc
@@ -13,6 +13,7 @@ def run_instruction(memory_banks: list[emulator.memory.Memory], instruction: int
     FUNCTIONS = {
         0: nop,
         2: ldr,
+        3: ldm,
         4: mvr,
         5: mvm,
         6: ser,

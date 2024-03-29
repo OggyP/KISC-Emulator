@@ -19,14 +19,14 @@
   rtn              ;END LoopTest
 
 .start
-  ser RA 12
-  otr RA
-
   ser RD 0
-  sem RD 32
+  sem RD 3232
   otm RD
 
-  ldr RA RD
+  ser RA 1332
   otr RA
+
+  ldm RD RA
+  otm RD
 
   rtn
