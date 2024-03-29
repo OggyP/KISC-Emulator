@@ -1,11 +1,11 @@
 .average
   add RA R0
   bsr RA
-  ret
+  rtn
 
 .cmp_test
   ser RA #111
-  ret
+  rtn
 
 .loop_test         ;BEGIN LoopTest
   ser RA #007      ;  let num1 = 1
@@ -16,7 +16,7 @@
     dec RA         ;    decrement num1
     jmp .while
   .endwhile        ;  ENDWHILE
-  ret              ;END LoopTest
+  rtn              ;END LoopTest
 
 .start
   ser RA 2
@@ -24,4 +24,4 @@
   ; fnc .loop_test
   div RA R0
   otr RA
-  ret
+  rtn

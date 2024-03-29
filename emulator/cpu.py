@@ -26,7 +26,7 @@ class CPU:
         instruction = emulator.memory.bit_array_to_int(instruction_bits)
 
         if instruction == 1:  # hits return
-            logger.debug("Hit ret")
+            logger.debug("Hit rtn")
             stack_size = emulator.memory.bit_array_to_int(
                 self.memory_banks[MEMBANK.STK.value].get_value(0, A_SIZE))
             if stack_size == 0:
