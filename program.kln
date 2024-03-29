@@ -19,11 +19,12 @@
   rtn              ;END LoopTest
 
 .start
-  ser RA 2
-  ser R0 10
-  ser RD 0
-  sem RD 12
-  otm RD
+  ser RA 123
+  ser R0 13
+  otr RA
+  otr R0
+  mvr RA R0
+  otr RA
   ; fnc .loop_test
   div RA R0
   otr RA

@@ -1,7 +1,7 @@
 import logging
 import emulator.memory
 
-from emulator.instructions.mem_mgnt import ser, sem
+from emulator.instructions.mem_mgnt import mvr, ser, sem
 from emulator.instructions.bitwise import and_op, bsl, bsr, orr, xor
 from emulator.instructions.arithmetic import add, mpy, div, inc, dec
 from emulator.instructions.branches import comp, jlt, jle, jeq, jge, jgt, jne, jmp, fnc
@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 def run_instruction(memory_banks: list[emulator.memory.Memory], instruction: int, instruction_address: int):
     FUNCTIONS = {
         0: nop,
+        4: mvr,
         6: ser,
         7: sem,
         8: and_op,

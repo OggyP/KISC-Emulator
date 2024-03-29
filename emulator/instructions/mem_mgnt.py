@@ -4,6 +4,17 @@ from compiler.instructions import I_SIZE, A_SIZE, MAX_INT
 from emulator.memory import MEMBANK, bit_array_to_int
 
 
+def mvr(memory_banks: list[emulator.memory.Memory], instruction_address: int):
+    address_to_load = get_arg_value(
+        memory_banks[MEMBANK.ROM.value], instruction_address, 0)
+    address_from = get_arg_value(
+        memory_banks[MEMBANK.ROM.value], instruction_address, 1)
+    memory_banks[MEMBANK.REG.value].set_value(
+        address_to_load,
+        memory_banks[MEMBANK.REG.value].get_value(address_from, A_SIZE),
+    )
+
+
 def ser(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     address_to_load = get_arg_value(
         memory_banks[MEMBANK.ROM.value], instruction_address, 0)
