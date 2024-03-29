@@ -21,12 +21,10 @@
   mpy RB RA
   add RB RA
   mvr RD RA
-  otr RB
-  ser R0 9         ;  let search = 9
+  ser R0 15         ;  let search = 9
   ser FB 1
   ser R1 0         ;  let found = false
   .while           ;  WHILE i < length AND found = false
-    otr RD
     cmp RD RB
     jge .endwhile
     cmp R1 FB
@@ -38,6 +36,7 @@
       ser R1 1
       ser RA 12
       div RD RA
+      dec RD
       jmp .endif_1
     .else_1
       ser RA 12
@@ -53,7 +52,6 @@
   .else_2
     ser RA 12
     div RB RA
-    inc RB
     otr RB
   .endif_2
   rtn              ;END LinearSearch
