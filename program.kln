@@ -19,9 +19,9 @@
   ret              ;END LoopTest
 
 .start
-  ser RA $111
-  ser R0 $101
+  ser RA 2
+  ser R0 10
   ; fnc .loop_test
-  orr RA R0
+  div RA R0
   otr RA
   ret

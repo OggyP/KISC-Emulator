@@ -61,6 +61,27 @@ def mpy(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     memory_banks[MEMBANK.REG.value].set_value(address_to_mpy_to, result)
 
 
+def div(memory_banks: list[emulator.memory.Memory], instruction_address: int):
+    address_to_div_to = get_arg_value(
+        memory_banks[MEMBANK.ROM.value], instruction_address, 0)
+    address_to_div_from = get_arg_value(
+        memory_banks[MEMBANK.ROM.value], instruction_address, 1)
+
+    arr1 = memory_banks[MEMBANK.REG.value].get_value(address_to_div_to, A_SIZE)
+    arr2 = memory_banks[MEMBANK.REG.value].get_value(
+        address_to_div_from, A_SIZE)
+    
+    num1 = emulator.memory.bit_array_to_int(arr1)
+    num2 = emulator.memory.bit_array_to_int(arr2)
+
+    if num2 == 0:
+        raise ArithmeticError("Division by 0 is undefined and disallowed")
+    else:
+        int_result = num1 // num2
+        result = emulator.memory.int_to_bit_array(int_result, 12)
+        memory_banks[MEMBANK.REG.value].set_value(address_to_div_to, result)
+
+
 def inc(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     address_to_add_to = get_arg_value(
         memory_banks[MEMBANK.ROM.value], instruction_address, 0)
