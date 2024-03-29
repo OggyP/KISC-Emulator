@@ -1,6 +1,7 @@
 stages:          # List of stages for jobs, and their order of execution
   - compile-execute
   - execute-binary
+  - deploy
 
 compile-execute-job:       # This job runs in the build stage, which runs first.
   stage: compile-execute
@@ -15,10 +16,3 @@ execute-bin-job:   # This job runs in the test stage.
     - echo "Executing binary compiled binary file."
     - python3 -O main.py program.kbin
     - echo "Finished Executing Program Binary"
-
-lint-test-job:   # This job also runs in the test stage.
-  stage: test    # It can run at the same time as unit-test-job (in parallel).
-  script:
-    - echo "Linting code... This will take about 10 seconds."
-    - sleep 10
-    - echo "No lint issues found."
