@@ -19,12 +19,16 @@
   ldr RB RD        ;  let length = arrLength
   ser RA 12
   mpy RB RA
+  add RB RA
+  mvr RD RA
+  otr RB
   ser R0 9         ;  let search = 9
   ser FB 1
   ser R1 0         ;  let found = false
   .while           ;  WHILE i < length AND found = false
+    otr RD
     cmp RD RB
-    jeq .endwhile
+    jge .endwhile
     cmp R1 FB
     jeq .endwhile
     .if_1
