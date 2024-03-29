@@ -52,8 +52,6 @@ def line_to_binary(line: str, current_address: int):
                 "label": arg.lstrip(LABEL_SYMBOL),
                 "address": current_address
             })
-        elif arg.startswith(";"):
-            break
         else:
             value = emulator.memory.mnemonic_to_adddress(arg)[0]
 

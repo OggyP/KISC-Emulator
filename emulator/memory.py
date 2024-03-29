@@ -21,6 +21,7 @@ def int_to_hex(integer_value: int):
         logger.warn("Invalid integer value.")
         return 0
     
+
 def bin_to_int(binary_value: str):
     try:
         binary_value = binary_value.lstrip("$")
