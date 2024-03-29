@@ -36,7 +36,7 @@ def main(file_path: str):
 
     ROM = emulator.memory.Memory(len(instructions_binary))
     RAM = emulator.memory.Memory(128)
-    REG = emulator.memory.Memory(128)
+    REG = emulator.memory.Memory(256)
     STK = emulator.memory.Memory(128)
 
     ROM.set_value(STARTING_ADDRESS, instructions_binary)

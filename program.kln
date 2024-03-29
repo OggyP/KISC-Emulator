@@ -29,4 +29,9 @@
   ldm RD RA
   otm RD
 
+  ser FB 3
+  ser RB 1
+  cmp FB RB
+  otr CV
+
   rtn

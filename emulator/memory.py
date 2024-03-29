@@ -73,10 +73,10 @@ def mnemonic_to_adddress(mnemonic) -> tuple[int, int]:
         "R1": ("#054", 12),
         "R2": ("#060", 12),
         "R3": ("#06c", 12),
-        "FC": ("#078", 1),
-        "FI": ("#079", 1),
-        "FB": ("#07a", 1),
-        "CV": ("#081", 3),
+        "FC": ("#078", 12),
+        "FI": ("#084", 12),
+        "FB": ("#090", 12),
+        "CV": ("#09c", 12),
     }
 
     if not mnemonic in RESERVED_ADDRESSES:

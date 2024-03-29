@@ -1,7 +1,7 @@
 from emulator.instructions.general_functions import get_arg_bits, get_arg_value
 import emulator.memory
 from compiler.instructions import I_SIZE, A_SIZE, MAX_INT
-from emulator.memory import MEMBANK
+from emulator.memory import MEMBANK, bit_array_to_int
 
 
 def comp(memory_banks: list[emulator.memory.Memory], instruction_address: int):
@@ -13,59 +13,67 @@ def comp(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     lhs_bits = memory_banks[MEMBANK.REG.value].get_value(address_lhs, A_SIZE)
     rhs_bits = memory_banks[MEMBANK.REG.value].get_value(address_rhs, A_SIZE)
 
-    lhs = emulator.memory.bit_array_to_int(lhs_bits)
-    rhs = emulator.memory.bit_array_to_int(rhs_bits)
+    lhs = bit_array_to_int(lhs_bits)
+    rhs = bit_array_to_int(rhs_bits)
 
-    result = [False, lhs > rhs, lhs == rhs]
+    result = [False for i in range(10)]
+    result.append(lhs > rhs)
+    result.append(lhs == rhs)
     CV = emulator.memory.mnemonic_to_adddress("CV")
     memory_banks[MEMBANK.REG.value].set_value(CV[0], result)
 
 
 def jlt(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     CV = emulator.memory.mnemonic_to_adddress("CV")
-    CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], 3)
+    CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], A_SIZE)
+    CV_val = bit_array_to_int(CV_bits)
 
-    if CV_bits == [False, False, False]:
+    if CV_bits == 0:
         jmp(memory_banks, instruction_address)
 
 
 def jle(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     CV = emulator.memory.mnemonic_to_adddress("CV")
-    CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], 3)
+    CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], A_SIZE)
+    CV_val = bit_array_to_int(CV_bits)
 
-    if CV_bits == [False, False, False] or CV_bits == [False, False, True]:
+    if CV_bits == 0 or CV_bits == 1:
         jmp(memory_banks, instruction_address)
 
 
 def jeq(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     CV = emulator.memory.mnemonic_to_adddress("CV")
-    CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], 3)
+    CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], A_SIZE)
+    CV_val = bit_array_to_int(CV_bits)
 
-    if CV_bits == [False, False, True]:
+    if CV_bits == 1:
         jmp(memory_banks, instruction_address)
 
 
 def jge(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     CV = emulator.memory.mnemonic_to_adddress("CV")
-    CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], 3)
+    CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], A_SIZE)
+    CV_val = bit_array_to_int(CV_bits)
 
-    if CV_bits == [False, False, True] or CV_bits == [False, True, False]:
+    if CV_bits == 1 or CV_bits == 2:
         jmp(memory_banks, instruction_address)
 
 
 def jgt(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     CV = emulator.memory.mnemonic_to_adddress("CV")
-    CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], 3)
+    CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], A_SIZE)
+    CV_val = bit_array_to_int(CV_bits)
 
-    if CV_bits == [False, True, False]:
+    if CV_bits == 2:
         jmp(memory_banks, instruction_address)
 
 
 def jne(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     CV = emulator.memory.mnemonic_to_adddress("CV")
-    CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], 3)
+    CV_bits = memory_banks[MEMBANK.REG.value].get_value(CV[0], A_SIZE)
+    CV_val = bit_array_to_int(CV_bits)
 
-    if CV_bits != [False, False, True]:
+    if CV_bits != 1:
         jmp(memory_banks, instruction_address)
 
 
