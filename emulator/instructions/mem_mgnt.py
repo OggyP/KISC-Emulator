@@ -5,13 +5,28 @@ from emulator.memory import MEMBANK, bit_array_to_int
 
 
 def mvr(memory_banks: list[emulator.memory.Memory], instruction_address: int):
-    address_to_load = get_arg_value(
+    address_to = get_arg_value(
         memory_banks[MEMBANK.ROM.value], instruction_address, 0)
     address_from = get_arg_value(
         memory_banks[MEMBANK.ROM.value], instruction_address, 1)
     memory_banks[MEMBANK.REG.value].set_value(
-        address_to_load,
+        address_to,
         memory_banks[MEMBANK.REG.value].get_value(address_from, A_SIZE),
+    )
+
+
+def mvm(memory_banks: list[emulator.memory.Memory], instruction_address: int):
+    register_1 = get_arg_value(
+        memory_banks[MEMBANK.ROM.value], instruction_address, 0)
+    register_2 = get_arg_value(
+        memory_banks[MEMBANK.ROM.value], instruction_address, 1)
+    
+    address_to = bit_array_to_int(memory_banks[MEMBANK.REG.value].get_value(register_1, A_SIZE))
+    address_from = bit_array_to_int(memory_banks[MEMBANK.REG.value].get_value(register_2, A_SIZE))
+
+    memory_banks[MEMBANK.RAM.value].set_value(
+        address_to,
+        memory_banks[MEMBANK.RAM.value].get_value(address_from, A_SIZE),
     )
 
 
