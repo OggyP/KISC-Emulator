@@ -18,11 +18,10 @@
   .endwhile        ;  ENDWHILE
   ret              ;END LoopTest
 
-
 .start
-  ser RA 4
-  ser R0 8
+  ser RA $111
+  ser R0 $101
   ; fnc .loop_test
-  mpy RA R0
+  orr RA R0
   otr RA
   ret

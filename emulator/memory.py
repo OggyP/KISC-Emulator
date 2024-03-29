@@ -20,6 +20,15 @@ def int_to_hex(integer_value: int):
     except ValueError:
         logger.warn("Invalid integer value.")
         return 0
+    
+def bin_to_int(binary_value: str):
+    try:
+        binary_value = binary_value.lstrip("$")
+        integer_value = int(binary_value, 2)
+        return integer_value
+    except ValueError:
+        logger.warn("Invalid binary value.")
+        return 0
 
 
 def int_to_bit_array(num, bits):

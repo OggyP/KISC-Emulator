@@ -42,6 +42,8 @@ def line_to_binary(line: str, current_address: int):
         arg = args[arg_num]
         if arg.startswith('#'):
             value = emulator.memory.hex_to_int(arg)
+        elif arg.startswith('$'):
+            value = emulator.memory.bin_to_int(arg)
         elif arg.isdigit():
             value = int(arg)
         elif arg.startswith(LABEL_SYMBOL):
