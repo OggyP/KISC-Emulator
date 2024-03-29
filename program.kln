@@ -21,6 +21,9 @@
 .start
   ser RA 2
   ser R0 10
+  ser RD 0
+  sem RD 12
+  otm RD
   ; fnc .loop_test
   div RA R0
   otr RA
