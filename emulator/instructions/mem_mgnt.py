@@ -4,6 +4,22 @@ from compiler.instructions import I_SIZE, A_SIZE, MAX_INT
 from emulator.memory import MEMBANK, bit_array_to_int
 
 
+def ldr(memory_banks: list[emulator.memory.Memory], instruction_address: int):
+    address_to = get_arg_value(
+        memory_banks[MEMBANK.ROM.value], instruction_address, 0)
+    
+    register_address = get_arg_value(
+        memory_banks[MEMBANK.ROM.value], instruction_address, 1)
+    address_from = bit_array_to_int(
+        memory_banks[MEMBANK.REG.value].get_value(register_address, A_SIZE)
+        )
+    
+    memory_banks[MEMBANK.REG.value].set_value(
+        address_to,
+        memory_banks[MEMBANK.RAM.value].get_value(address_from, A_SIZE),
+    )
+
+
 def mvr(memory_banks: list[emulator.memory.Memory], instruction_address: int):
     address_to = get_arg_value(
         memory_banks[MEMBANK.ROM.value], instruction_address, 0)
