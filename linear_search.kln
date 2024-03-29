@@ -1,0 +1,59 @@
+.load_array       ;BEGIN LoadArray
+  ser RD 0
+  sem RD 5        ;  let arrLength = 5
+  ser RD 12
+  sem RD 2        ;  let array[0] = 2
+  ser RD 24
+  sem RD 3        ;  let array[1] = 3
+  ser RD 36
+  sem RD 6        ;  let array[2] = 6
+  ser RD 48
+  sem RD 9        ;  let array[3] = 9
+  ser RD 60
+  sem RD 12       ;  let array[4] = 12
+  rtn             ;END LoadArray
+
+.linear_search     ;BEGIN LinearSearch
+  fnc .load_array  ;  LoadArray
+  ser RD 0
+  ldr RB RD        ;  let length = arrLength
+  ser RA 12
+  mpy RB RA
+  ser R0 9         ;  let search = 9
+  ser FB 1
+  ser R1 0         ;  let found = false
+  .while           ;  WHILE i < length AND found = false
+    cmp RD RB
+    jeq .endwhile
+    cmp R1 FB
+    jeq .endwhile
+    .if_1
+      ldr RA RD
+      cmp R0 RA
+      jne .else_1
+      ser R1 1
+      ser RA 12
+      div RD RA
+      jmp .endif_1
+    .else_1
+      ser RA 12
+      add RD RA
+    .endif_1
+    jmp .while
+  .endwhile        ;  ENDWHILE
+  .if_2
+    cmp R1 FB
+    jne .else_2
+    otr RD
+    jmp .endif_2
+  .else_2
+    ser RA 12
+    div RB RA
+    inc RB
+    otr RB
+  .endif_2
+  rtn              ;END LinearSearch
+
+.start
+  fnc .linear_search
+  rtn
