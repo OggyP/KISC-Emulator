@@ -82,6 +82,6 @@ def save_punch_card_to_file(bits_list, filename):
             f.write(f'  {current_line}  |  {bits_line}\n')
             current_line += 1
 
-            if (i + 6) % 21 == 0:  # Insert newline every 21 lines
+            if current_line % 21 == 0:  # Insert newline every 21 lines
                 current_card += 1
                 f.write('\nCard ' + str(current_card) + ':\n')
