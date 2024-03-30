@@ -1,3 +1,4 @@
+import math
 import struct
 import compiler.instructions
 import emulator.memory
@@ -71,17 +72,29 @@ def load_bool_list_from_binary(filename):
 
 
 def save_punch_card_to_file(bits_list, filename):
+    CARD_X = 6
+    CARD_Y = 21
+
     with open(filename, 'w') as f:
         current_card = 1
         current_line = 0
         f.write('Card 1:\n')
+
+        TOTAL_LINES = len(bits_list) // CARD_X
+        MAX_NUM_LENGTH = math.floor(math.log10(TOTAL_LINES)) + 1
         
-        for i in range(0, len(bits_list), 6):
+        for i in range(0, len(bits_list), CARD_X):
             bits_line = ''.join(
                 '1' if bit else '0' for bit in bits_list[i:i+6])
-            f.write(f'  {current_line}  |  {bits_line}\n')
+            if current_line == 0:
+                line_diff = MAX_NUM_LENGTH
+            else:    
+                CURRENT_NUM_LENGTH = math.floor(math.log10(current_line))
+                line_diff = MAX_NUM_LENGTH-CURRENT_NUM_LENGTH
+
+            f.write(f'  {current_line}  {" "*line_diff}|  {bits_line}\n')
             current_line += 1
 
-            if current_line % 21 == 0:  # Insert newline every 21 lines
+            if current_line % CARD_Y == 0:  # Insert newline every 21 lines
                 current_card += 1
                 f.write('\nCard ' + str(current_card) + ':\n')
