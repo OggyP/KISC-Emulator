@@ -34,4 +34,7 @@
   cmp FB RB
   otr CV
 
+  ser RA 1
+  otr 1
+
   rtn
